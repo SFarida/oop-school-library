@@ -135,7 +135,5 @@ My mother. Let's play until the end together ❤️ with 🧠
 
 This project is [MIT](./LICENSE) licensed.
 
-<a href="./licence">License</a>
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
