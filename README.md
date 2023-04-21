@@ -32,9 +32,9 @@
 - [❓ FAQ](#faq)
 - [📝 License](#license)
 
-# 📖 Enumerable Ruby App - Ruby Microverse Project Module 4<a name="about-project"></a>
+# 📖 OOP School Library Ruby 
 
-> Enumerable Ruby App developed with Ruby.
+> OOP School Library Ruby developed with Ruby.
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -51,8 +51,9 @@
 
 ### Key Features <a name="key-features"></a>
 
-- **Implement some methods of Enumerable**
-- **Implement methods #all? #any? and #filter?**
+- **Person class**
+- **Student class**
+- **Teacher class**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
