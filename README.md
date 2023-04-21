@@ -19,8 +19,6 @@
   - [🛠 Built With](#built-with)
     - [Tech Stack](#tech-stack)
     - [Key Features](#key-features)
-
-- [🧑🏻‍💻 Live Demo](#live-demo)
 - [💻 Getting Started](#getting-started)
   - [Available Scripts](#available-scripts)
   - [Clone](#clone)
@@ -56,12 +54,6 @@
 - **Teacher class**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## 🧑🏻‍💻 Live Demo <a name="live-demo"></a>
-
-Coming soon...
-
-<br/>
 
 ## 💻 Getting Started <a name="getting-started"></a>
 
@@ -100,7 +92,8 @@ To fix all Linter error automatically
 : Farida Gueleu
 
 - GitHub: [@SFarida](https://github.com/SFarida)
-- Linkedin: [Farida Gueleu](https://www.linkedin.com/in/farida-gueleu/)
+- Twitter: [@First_Dialo](https://twitter.com/First_Dialo)
+- LinkedIn: [LinkedIn](https://linkedin.com/in/farida-gueleu/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -140,7 +133,7 @@ My mother. Let's play until the end together ❤️ with 🧠
 
 ## 📝 License <a name="license"></a>
 
-This project is [MIT](<a href="./licence">License</a>) licensed.
+This project is [MIT](./LICENSE) licensed.
 
 <a href="./licence">License</a>
 
