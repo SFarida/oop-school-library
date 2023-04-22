@@ -3,61 +3,21 @@ require './teacher'
 require './rental'
 require './student'
 class App
-  def initialize
+  def initialize(opt)
     @persons = []
     @books = []
     @rentals = []
-  end
-
-  def run
-    option_list = [1, 2, 3, 4, 5, 6, 7]
-    puts 'Welcome to School Library App !'
-    puts ''
-    puts 'Please choose an option by entering a number:'
-    puts '1 - List all books'
-    puts '2 - List all people'
-    puts '3 - Create a person'
-    puts '4 - Create a book'
-    puts '5 - Create a rental'
-    puts '6 - List all rentals for a given person id'
-    puts '7 - Exit'
-    option = gets.to_i
-    # puts option
-    if option_list.include? option
-      case option
-      when 1
-        list_all_books
-        run
-      when 2
-        list__all_people
-        run
-      when 3
-        create_person
-        run
-      when 4
-        create_book
-        run
-      when 5
-        create_rental
-        run
-      when 6
-        list_all_rentals_per_person
-        run
-      when 7
-        puts 'Good bye!'
-      end
-    else
-      puts 'Please enter a number between 1-6'
-      run
-    end
+    @option = opt
   end
 
   def list_all_books
     @books.each { |book| puts "Title: #{book.title}, Author: #{book.author}" }
+    @option.list_options
   end
 
   def list__all_people
     @persons.each { |person| puts "ID: #{person.id}, Name: #{person.name}, Age: #{person.age}" }
+    @option.list_options
   end
 
   def create_person
@@ -70,15 +30,12 @@ class App
       print 'Name: '
       name = gets.chomp
       if profession == 1
-        print 'Has parent permission? [Y/N]: '
-        has_parent_permission = gets.chomp
-        @persons.push(Student.new(name, age, has_parent_permission))
+        create_student(name, age)
       else
-        print 'Specialization: '
-        specialization = gets.chomp
-        @persons.push(Teacher.new(name, age, specialization))
+        create_teacher(name, age)
       end
       puts 'Person created successfully'
+      @option.list_options
     else
       puts 'Please enter 1 or 2'
       create_person
@@ -92,6 +49,7 @@ class App
     author = gets.chomp
     @books.push(Book.new(title, author))
     puts 'Book created successfully'
+    @option.list_options
   end
 
   def create_rental
@@ -110,6 +68,7 @@ class App
     print 'Date: '
     date_rented = gets.chomp
     @rentals.push(Rental.new(date_rented, @persons[person_index], @books[book_index]))
+    @option.list_options
   end
 
   def list_all_rentals_per_person
@@ -121,5 +80,18 @@ class App
         puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}"
       end
     end
+    @option.list_options
+  end
+
+  def create_student(name, age)
+    print 'Has parent permission? [Y/N]: '
+    has_parent_permission = gets.chomp
+    @persons.push(Student.new(name, age, has_parent_permission))
+  end
+
+  def create_teacher(name, age)
+    print 'Specialization: '
+    specialization = gets.chomp
+    @persons.push(Teacher.new(name, age, specialization))
   end
 end
