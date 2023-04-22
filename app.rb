@@ -8,6 +8,7 @@ class App
     @books = []
     @rentals = []
   end
+
   def run
     option_list = [1, 2, 3, 4, 5, 6, 7]
     puts 'Welcome to School Library App !'
@@ -56,7 +57,7 @@ class App
   end
 
   def list__all_people
-    @persons.each { |person| puts "ID: #{person.id}, Name: #{person.name}, Age: #{person.age}"}
+    @persons.each { |person| puts "ID: #{person.id}, Name: #{person.name}, Age: #{person.age}" }
   end
 
   def create_person
@@ -116,8 +117,9 @@ class App
     person_id = gets.to_i
     puts 'Rentals: '
     @rentals.each do |rental|
-      puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}" if rental.person.id == person_id
+      if rental.person.id == person_id
+        puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}"
+      end
     end
   end
 end
-
