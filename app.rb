@@ -86,12 +86,12 @@ class App
   def create_student(name, age)
     print 'Has parent permission? [Y/N]: '
     has_parent_permission = gets.chomp
-    @persons.push(Student.new(name, age, has_parent_permission))
+    @persons.push(Student.new(age, has_parent_permission, name))
   end
 
   def create_teacher(name, age)
     print 'Specialization: '
     specialization = gets.chomp
-    @persons.push(Teacher.new(name, age, specialization))
+    @persons.push(Teacher.new(age, specialization, name))
   end
 end
