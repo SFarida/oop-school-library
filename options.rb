@@ -2,7 +2,6 @@ require './app'
 class Options
   def initialize
     @app = App.new(self)
-    puts 'Welcome to School Library App!'
     list_options
   end
 
