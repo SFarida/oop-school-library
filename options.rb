@@ -6,10 +6,9 @@ class Options
     list_options
   end
 
-
   def list_options
     option_list = [1, 2, 3, 4, 5, 6, 7]
-    msg='Please choose an option by entering a number:
+    msg = 'Please choose an option by entering a number:
     1 - List all books
     2 - List all people
     3 - Create a person
