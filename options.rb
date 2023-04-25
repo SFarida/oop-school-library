@@ -22,8 +22,8 @@ class Options
     if option_list.include? option
       call_methods(option)
     else
-      puts 'Please enter a number between 1-6'
-      run
+      puts 'Please enter a number between 1-7'
+      list_options
     end
   end
 
