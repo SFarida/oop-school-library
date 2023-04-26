@@ -23,7 +23,6 @@ class App
   end
 
   def load_books
-    puts 'here ok'
     File.foreach("books.txt") { |json|  
       book= JSON.parse(json)
       @books.push(Book.new(book['title'],book['author'] ))
