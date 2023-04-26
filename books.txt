@@ -1,3 +1,0 @@
-{ "title": "A", "author": "B"} 
-{ "title": "A", "author": "B"} 
-{ "title": "quijote", "author": "cervantes"} 

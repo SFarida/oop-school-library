@@ -2,7 +2,7 @@ require './app'
 class Options
   def initialize
     @app = App.new(self)
-    @app.load_books
+    @app.load_data
     list_options
   end
 
@@ -31,7 +31,6 @@ class Options
   def call_methods(option)
     if option == 7
       puts 'Good bye!'
-      @app.save_all_books
     else
       options = {
         1 => :list_all_books,

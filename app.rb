@@ -16,18 +16,45 @@ class App
     @option.list_options
   end
 
-  def save_all_books
-    File.open("books.txt", "a") { |f| 
-     @books.each { |book| f.write "{ \"title\": \"#{book.title}\", \"author\": \"#{book.author}\"} \n" }
-    }    
+  def save_book(title, author)
+    File.open('books.txt', 'a') do |f|
+      f.write "{ \"title\": \"#{title}\", \"author\": \"#{author}\"} \n"
+      # @books.each { |book| f.write "{ \"title\": \"#{book.title}\", \"author\": \"#{book.author}\"} \n" }
+    end
   end
 
-  def load_books
-    puts 'here ok'
-    File.foreach("books.txt") { |json|  
-      book= JSON.parse(json)
-      @books.push(Book.new(book['title'],book['author'] ))
-    }
+  def load_data
+    return unless File.exist?('books.txt')
+
+    File.foreach('books.txt') do |json|
+      book = JSON.parse(json)
+      @books.push(Book.new(book['title'], book['author']))
+    end
+
+    return unless File.exist?('persons.txt')
+
+    File.foreach('persons.txt') do |json|
+      person = JSON.parse(json)
+      p person
+      if person['specialization'].nil?
+        @persons.push(Teacher.new(person['age'], person['specialization'], person['name']))
+      else
+        @persons.push(Student.new(person['age'], person['has_parent_permission'], person['name']))
+      end
+    end
+    puts 'Data loaded'
+  end
+
+  def save_student(age, name, has_parent_permission)
+    File.open('persons.txt', 'a') do |f|
+      f.write "{\"age\": \"#{age}\", \"has_parent_permission\": \"#{has_parent_permission}\", \"name\": \"#{name}\"} \n"
+    end
+  end
+
+  def save_teacher(age, name, specialization)
+    File.open('persons.txt', 'a') do |f|
+      f.write "{\"age\": \"#{age}\", \"specialization\": \"#{specialization}\", \"name\": \"#{name}\"} \n"
+    end
   end
 
   def list__all_people
@@ -63,6 +90,7 @@ class App
     print 'Author: '
     author = gets.chomp
     @books.push(Book.new(title, author))
+    save_book(title, author)
     puts 'Book created successfully'
     @option.list_options
   end
@@ -102,11 +130,13 @@ class App
     print 'Has parent permission? [Y/N]: '
     has_parent_permission = gets.chomp
     @persons.push(Student.new(age, has_parent_permission, name))
+    save_student(age, name, has_parent_permission)
   end
 
   def create_teacher(name, age)
     print 'Specialization: '
     specialization = gets.chomp
     @persons.push(Teacher.new(age, specialization, name))
+    save_teacher(age, name, specialization)
   end
 end
