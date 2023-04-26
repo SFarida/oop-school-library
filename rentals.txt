@@ -1,0 +1,2 @@
+{"date": "26/04/2023", "person_index": "0", "book_index": "0"} 
+{"date": "24/04/2023", "person_index": "0", "book_index": "0"} 

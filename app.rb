@@ -19,7 +19,6 @@ class App
   def save_book(title, author)
     File.open('books.txt', 'a') do |f|
       f.write "{ \"title\": \"#{title}\", \"author\": \"#{author}\"} \n"
-      # @books.each { |book| f.write "{ \"title\": \"#{book.title}\", \"author\": \"#{book.author}\"} \n" }
     end
   end
 
@@ -35,7 +34,6 @@ class App
 
     File.foreach('persons.txt') do |json|
       person = JSON.parse(json)
-      p person
       if person['specialization'].nil?
         @persons.push(Teacher.new(person['age'], person['specialization'], person['name']))
       else
@@ -47,7 +45,7 @@ class App
 
     File.foreach('rentals.txt') do |json|
       rental = JSON.parse(json)
-      @rentals.push(Rental.new(rental['date'], rental['person'], rental['book']))
+      @rentals.push(Rental.new(rental['date'], @persons[rental['person_index'].to_i], @books[rental['book_index'].to_i]))
     end
 
     puts 'Data loaded'
@@ -67,9 +65,9 @@ class App
 
 
   
-  def save_rental(date, person, book)
-    File.open('rental.txt', 'a') do |f|
-      f.write "{\"date\": \"#{date}\", \"person\": \"#{person}\", \"book\": \"#{book}\"} \n"
+  def save_rental(date, person_index, book_index)
+    File.open('rentals.txt', 'a') do |f|
+      f.write "{\"date\": \"#{date}\", \"person_index\": \"#{person_index}\", \"book_index\": \"#{book_index}\"} \n"
     end
   end
 
@@ -127,7 +125,7 @@ class App
     print 'Date: '
     date_rented = gets.chomp
     @rentals.push(Rental.new(date_rented, @persons[person_index], @books[book_index]))
-    save_rental(date_rented, @persons[person_index], @books[book_index])
+    save_rental(date_rented, person_index, book_index)
     @option.list_options
   end
 
