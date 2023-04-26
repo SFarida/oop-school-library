@@ -1,0 +1,1 @@
+{"date": "26/04/2023", "person": "#<Student:0x00007fbd370c52c8>", "book": "#<Book:0x00007fbd370c4be8>"} 

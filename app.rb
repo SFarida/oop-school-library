@@ -42,6 +42,14 @@ class App
         @persons.push(Student.new(person['age'], person['has_parent_permission'], person['name']))
       end
     end
+
+    return unless File.exist?('rentals.txt')
+
+    File.foreach('rentals.txt') do |json|
+      rental = JSON.parse(json)
+      @rentals.push(Rental.new(rental['date'], rental['person'], rental['book']))
+    end
+
     puts 'Data loaded'
   end
 
@@ -54,6 +62,14 @@ class App
   def save_teacher(age, name, specialization)
     File.open('persons.txt', 'a') do |f|
       f.write "{\"age\": \"#{age}\", \"specialization\": \"#{specialization}\", \"name\": \"#{name}\"} \n"
+    end
+  end
+
+
+  
+  def save_rental(date, person, book)
+    File.open('rental.txt', 'a') do |f|
+      f.write "{\"date\": \"#{date}\", \"person\": \"#{person}\", \"book\": \"#{book}\"} \n"
     end
   end
 
@@ -111,6 +127,7 @@ class App
     print 'Date: '
     date_rented = gets.chomp
     @rentals.push(Rental.new(date_rented, @persons[person_index], @books[book_index]))
+    save_rental(date_rented, @persons[person_index], @books[book_index])
     @option.list_options
   end
 
