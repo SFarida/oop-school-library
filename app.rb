@@ -23,27 +23,12 @@ class App
   end
 
   def load_books
-    File.foreach("books.txt") { |json|  
-      book= JSON.parse(json)
-      @books.push(Book.new(book['title'],book['author'] ))
-    }
-  end
-
-  def save_all_books
-    File.open("books.txt", "a") { |f| 
-     @books.each { |book| f.write "{ \"title\": \"#{book.title}\", \"author\": \"#{book.author}\"} \n" }
-    }    
-  end
-
-  def load_books
     puts 'here ok'
     File.foreach("books.txt") { |json|  
       book= JSON.parse(json)
       @books.push(Book.new(book['title'],book['author'] ))
     }
   end
-
-
 
   def list__all_people
     @persons.each { |person| puts "ID: #{person.id}, Name: #{person.name}, Age: #{person.age}" }
