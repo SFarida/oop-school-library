@@ -4,7 +4,9 @@ require './rental'
 require './student'
 require './classroom'
 require 'json'
+require_relative 'util'
 class App
+  include Utilities
   def initialize(opt)
     @persons = []
     @books = []
@@ -49,7 +51,7 @@ class App
       else
         create_student(person['name'], person['age'], person['id'], person['has_parent_permission'])
       end
-      p person['id']
+      # p person['id']
     end
   end
 
@@ -58,32 +60,14 @@ class App
 
     File.foreach('rentals.txt') do |json|
       rental = JSON.parse(json)
-      p @persons
+      # p @persons
       # person_index = @persons.find_index{|elt| p elt.id}
       # p rental['person_id']
       person_index = @persons.find_index { |elt| elt.id == rental['person_id'] }
       book_index = @books.find_index { |elt| elt.title == rental['book_title'] }
-      p @persons[person_index]
+      # p @persons[person_index]
       @rentals.push(Rental.new(rental['date'], @persons[person_index], @books[book_index]))
-      p @rentals
-    end
-  end
-
-  def save_student(id, age, name, has_parent_permission)
-    File.open('persons.txt', 'a') do |f|
-      f.write "{\"id\": \"#{id}\", \"age\": \"#{age}\", \"has_parent_permission\": \"#{has_parent_permission}\", \"name\": \"#{name}\", \"type\": \"student\"} \n"
-    end
-  end
-
-  def save_teacher(id, age, name, specialization)
-    File.open('persons.txt', 'a') do |f|
-      f.write "{\"id\": \"#{id}\", \"age\": \"#{age}\", \"specialization\": \"#{specialization}\", \"name\": \"#{name}\", \"type\": \"teacher\"} \n"
-    end
-  end
-
-  def save_rental(date, person_id, book_title)
-    File.open('rentals.txt', 'a') do |f|
-      f.write "{\"date\": \"#{date}\", \"person_id\": \"#{person_id}\", \"book_title\": \"#{book_title}\"} \n"
+      # p @rentals
     end
   end
 
@@ -144,6 +128,7 @@ class App
     p @persons[person_index]
     @rentals.push(Rental.new(date_rented, @persons[person_index], @books[book_index]))
     save_rental(date_rented, @persons[person_index].id, @books[book_index].title)
+    # Utilities.save_rental(date_rented, @persons[person_index].id, @books[book_index].title)
     @option.list_options
   end
 
@@ -159,23 +144,24 @@ class App
     @option.list_options
   end
 
-  def create_student(name, age, id = '', permission = '')
+  def create_student(name, age, id = '', stored_permission = '')
     classroom = Classroom.new('General class')
     student = if id == ''
                 print 'Has parent permission? [Y/N]: '
                 permissions = %w[y n]
                 has_parent_permission = gets.chomp.downcase
+                input_permission = false
                 if permissions.include? has_parent_permission
-                  parent_permission = has_parent_permission == 'y'
+                  input_permission = has_parent_permission == 'y'
                 else
                   create_student(name, age)
                 end
-                Student.new(age, classroom, name, parent_permission)
+                Student.new(age, classroom, name, parent_permission: input_permission)
               else
-                Student.new(age, classroom, name, permission, id)
+                Student.new(age, classroom, name, id, parent_permission: stored_permission)
               end
     student.classroom = classroom
-    p id
+    # p id
     @persons.push(student)
     person = @persons[@persons.length - 1]
     return unless id == ''

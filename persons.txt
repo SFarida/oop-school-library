@@ -1,3 +1,6 @@
 {"id": "32", "age": "12", "has_parent_permission": "true", "name": "Alex", "type": "student"} 
 {"id": "128", "age": "34", "specialization": "Network", "name": "Oben", "type": "teacher"} 
 {"id": "793", "age": "14", "has_parent_permission": "false", "name": "Tom", "type": "student"} 
+{"id": "472", "age": "20", "has_parent_permission": "true", "name": "Thomas", "type": "student"} 
+{"id": "449", "age": "11", "has_parent_permission": "false","name": "Jimmy", "type": "student"} 
+{"id": "743", "age": "55", "specialization": "Biology",  "name": "Sir", "type": "teacher"} 

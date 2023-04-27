@@ -2,7 +2,7 @@ require './person'
 class Student < Person
   attr_reader :parent_permission
 
-  def initialize(age, classroom, name = 'unknown', parent_permission = true, id = Random.rand(1..1000))
+  def initialize(age, classroom, name = 'unknown', id = Random.rand(1..1000), parent_permission: true)
     super(age, name, id, parent_permission: parent_permission)
     @classroom = classroom
   end
