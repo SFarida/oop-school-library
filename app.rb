@@ -2,6 +2,7 @@ require './book'
 require './teacher'
 require './rental'
 require './student'
+require './classroom'
 require 'json'
 class App
   def initialize(opt)
@@ -23,51 +24,66 @@ class App
   end
 
   def load_data
+    load_books
+    load_persons
+    load_rentals
+    puts 'Data loaded'
+  end
+
+  def load_books
     return unless File.exist?('books.txt')
 
     File.foreach('books.txt') do |json|
       book = JSON.parse(json)
       @books.push(Book.new(book['title'], book['author']))
     end
+  end
 
+  def load_persons
     return unless File.exist?('persons.txt')
 
     File.foreach('persons.txt') do |json|
       person = JSON.parse(json)
-      if person['specialization'].nil?
-        @persons.push(Teacher.new(person['age'], person['specialization'], person['name']))
+      if person['type'] == 'teacher'
+        create_teacher(person['name'], person['age'], person['id'], person['specialization'])
       else
-        @persons.push(Student.new(person['age'], person['has_parent_permission'], person['name']))
+        create_student(person['name'], person['age'], person['id'], person['has_parent_permission'])
       end
+      p person['id']
     end
+  end
 
+  def load_rentals
     return unless File.exist?('rentals.txt')
 
     File.foreach('rentals.txt') do |json|
       rental = JSON.parse(json)
-      @rentals.push(Rental.new(rental['date'], @persons[rental['person_index'].to_i], @books[rental['book_index'].to_i]))
+      p @persons
+      # person_index = @persons.find_index{|elt| p elt.id}
+      # p rental['person_id']
+      person_index = @persons.find_index { |elt| elt.id == rental['person_id'] }
+      book_index = @books.find_index { |elt| elt.title == rental['book_title'] }
+      p @persons[person_index]
+      @rentals.push(Rental.new(rental['date'], @persons[person_index], @books[book_index]))
+      p @rentals
     end
-
-    puts 'Data loaded'
   end
 
-  def save_student(age, name, has_parent_permission)
+  def save_student(id, age, name, has_parent_permission)
     File.open('persons.txt', 'a') do |f|
-      f.write "{\"age\": \"#{age}\", \"has_parent_permission\": \"#{has_parent_permission}\", \"name\": \"#{name}\"} \n"
+      f.write "{\"id\": \"#{id}\", \"age\": \"#{age}\", \"has_parent_permission\": \"#{has_parent_permission}\", \"name\": \"#{name}\", \"type\": \"student\"} \n"
     end
   end
 
-  def save_teacher(age, name, specialization)
+  def save_teacher(id, age, name, specialization)
     File.open('persons.txt', 'a') do |f|
-      f.write "{\"age\": \"#{age}\", \"specialization\": \"#{specialization}\", \"name\": \"#{name}\"} \n"
+      f.write "{\"id\": \"#{id}\", \"age\": \"#{age}\", \"specialization\": \"#{specialization}\", \"name\": \"#{name}\", \"type\": \"teacher\"} \n"
     end
   end
 
-
-  
-  def save_rental(date, person_index, book_index)
+  def save_rental(date, person_id, book_title)
     File.open('rentals.txt', 'a') do |f|
-      f.write "{\"date\": \"#{date}\", \"person_index\": \"#{person_index}\", \"book_index\": \"#{book_index}\"} \n"
+      f.write "{\"date\": \"#{date}\", \"person_id\": \"#{person_id}\", \"book_title\": \"#{book_title}\"} \n"
     end
   end
 
@@ -124,8 +140,10 @@ class App
 
     print 'Date: '
     date_rented = gets.chomp
+    p person_index
+    p @persons[person_index]
     @rentals.push(Rental.new(date_rented, @persons[person_index], @books[book_index]))
-    save_rental(date_rented, person_index, book_index)
+    save_rental(date_rented, @persons[person_index].id, @books[book_index].title)
     @option.list_options
   end
 
@@ -134,24 +152,49 @@ class App
     person_id = gets.to_i
     puts 'Rentals: '
     @rentals.each do |rental|
-      if rental.person.id == person_id
+      if rental.person.id.to_i == person_id
         puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}"
       end
     end
     @option.list_options
   end
 
-  def create_student(name, age)
-    print 'Has parent permission? [Y/N]: '
-    has_parent_permission = gets.chomp
-    @persons.push(Student.new(age, has_parent_permission, name))
-    save_student(age, name, has_parent_permission)
+  def create_student(name, age, id = '', permission = '')
+    classroom = Classroom.new('General class')
+    student = if id == ''
+                print 'Has parent permission? [Y/N]: '
+                permissions = %w[y n]
+                has_parent_permission = gets.chomp.downcase
+                if permissions.include? has_parent_permission
+                  parent_permission = has_parent_permission == 'y'
+                else
+                  create_student(name, age)
+                end
+                Student.new(age, classroom, name, parent_permission)
+              else
+                Student.new(age, classroom, name, permission, id)
+              end
+    student.classroom = classroom
+    p id
+    @persons.push(student)
+    person = @persons[@persons.length - 1]
+    return unless id == ''
+
+    save_student(person.id, person.age, person.name, person.parent_permission)
   end
 
-  def create_teacher(name, age)
-    print 'Specialization: '
-    specialization = gets.chomp
-    @persons.push(Teacher.new(age, specialization, name))
-    save_teacher(age, name, specialization)
+  def create_teacher(name, age, id = '', stored_specialization = '')
+    teacher = if id == ''
+                print 'Specialization: '
+                specialization = gets.chomp
+                Teacher.new(age, specialization, name)
+              else
+                Teacher.new(age, stored_specialization, name, id)
+              end
+    @persons.push(teacher)
+    person = @persons[@persons.length - 1]
+    return unless id == ''
+
+    save_teacher(person.id, person.age, person.name, person.specialization)
   end
 end

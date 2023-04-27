@@ -1,2 +1,2 @@
-{"date": "26/04/2023", "person_index": "0", "book_index": "0"} 
-{"date": "24/04/2023", "person_index": "0", "book_index": "0"} 
+{"date": "27/04/23", "person_id": "128", "book_title": "La corruptrice"} 
+{"date": "27/04/23", "person_id": "793", "book_title": "Les larmes de la patience"} 

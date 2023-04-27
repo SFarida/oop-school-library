@@ -1,1 +1,2 @@
-{ "title": "alfa", "author": "yo"} 
+{ "title": "La corruptrice", "author": "Guy des cars"} 
+{ "title": "Les larmes de la patience", "author": "Amadou Djaili"} 

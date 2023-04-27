@@ -1,7 +1,9 @@
 require './person'
 class Teacher < Person
-  def initialize(age, specialization, name = 'unknown')
-    super(age, name)
+  attr_reader :specialization
+
+  def initialize(age, specialization, name = 'unknown', id = Random.rand(1..1000))
+    super(age, name, id)
     @specialization = specialization
   end
 
