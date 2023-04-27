@@ -4,3 +4,4 @@
 {"id": "472", "age": "20", "has_parent_permission": "true", "name": "Thomas", "type": "student"} 
 {"id": "449", "age": "11", "has_parent_permission": "false","name": "Jimmy", "type": "student"} 
 {"id": "743", "age": "55", "specialization": "Biology",  "name": "Sir", "type": "teacher"} 
+{"id": "515", "age": "18", "has_parent_permission": "false","name": "Adam", "type": "student"} 

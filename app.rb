@@ -33,18 +33,18 @@ class App
   end
 
   def load_books
-    return unless File.exist?('books.txt')
+    return unless File.exist?('books.json')
 
-    File.foreach('books.txt') do |json|
+    File.foreach('books.json') do |json|
       book = JSON.parse(json)
       @books.push(Book.new(book['title'], book['author']))
     end
   end
 
   def load_persons
-    return unless File.exist?('persons.txt')
+    return unless File.exist?('persons.json')
 
-    File.foreach('persons.txt') do |json|
+    File.foreach('persons.json') do |json|
       person = JSON.parse(json)
       if person['type'] == 'teacher'
         create_teacher(person['name'], person['age'], person['id'], person['specialization'])
@@ -56,9 +56,9 @@ class App
   end
 
   def load_rentals
-    return unless File.exist?('rentals.txt')
+    return unless File.exist?('rentals.json')
 
-    File.foreach('rentals.txt') do |json|
+    File.foreach('rentals.json') do |json|
       rental = JSON.parse(json)
       # p @persons
       # person_index = @persons.find_index{|elt| p elt.id}
