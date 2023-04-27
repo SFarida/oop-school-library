@@ -7,6 +7,8 @@ require 'json'
 require_relative 'util'
 class App
   include Utilities
+  attr_reader :persons, :books, :rentals
+
   def initialize(opt)
     @persons = []
     @books = []
@@ -17,12 +19,6 @@ class App
   def list_all_books
     @books.each { |book| puts "Title: #{book.title}, Author: #{book.author}" }
     @option.list_options
-  end
-
-  def save_book(title, author)
-    File.open('books.txt', 'a') do |f|
-      f.write "{ \"title\": \"#{title}\", \"author\": \"#{author}\"} \n"
-    end
   end
 
   def load_data
@@ -60,14 +56,9 @@ class App
 
     File.foreach('rentals.json') do |json|
       rental = JSON.parse(json)
-      # p @persons
-      # person_index = @persons.find_index{|elt| p elt.id}
-      # p rental['person_id']
       person_index = @persons.find_index { |elt| elt.id == rental['person_id'] }
       book_index = @books.find_index { |elt| elt.title == rental['book_title'] }
-      # p @persons[person_index]
       @rentals.push(Rental.new(rental['date'], @persons[person_index], @books[book_index]))
-      # p @rentals
     end
   end
 
@@ -104,7 +95,6 @@ class App
     print 'Author: '
     author = gets.chomp
     @books.push(Book.new(title, author))
-    save_book(title, author)
     puts 'Book created successfully'
     @option.list_options
   end
@@ -124,11 +114,7 @@ class App
 
     print 'Date: '
     date_rented = gets.chomp
-    p person_index
-    p @persons[person_index]
     @rentals.push(Rental.new(date_rented, @persons[person_index], @books[book_index]))
-    save_rental(date_rented, @persons[person_index].id, @books[book_index].title)
-    # Utilities.save_rental(date_rented, @persons[person_index].id, @books[book_index].title)
     @option.list_options
   end
 
@@ -163,10 +149,6 @@ class App
     student.classroom = classroom
     # p id
     @persons.push(student)
-    person = @persons[@persons.length - 1]
-    return unless id == ''
-
-    save_student(person.id, person.age, person.name, person.parent_permission)
   end
 
   def create_teacher(name, age, id = '', stored_specialization = '')
@@ -178,9 +160,5 @@ class App
                 Teacher.new(age, stored_specialization, name, id)
               end
     @persons.push(teacher)
-    person = @persons[@persons.length - 1]
-    return unless id == ''
-
-    save_teacher(person.id, person.age, person.name, person.specialization)
   end
 end

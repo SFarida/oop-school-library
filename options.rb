@@ -1,5 +1,8 @@
 require './app'
+require_relative 'util'
+require 'fileutils'
 class Options
+  include Utilities
   def initialize
     @app = App.new(self)
     @app.load_data
@@ -30,6 +33,7 @@ class Options
 
   def call_methods(option)
     if option == 7
+      save_data
       puts 'Good bye!'
     else
       options = {
@@ -42,5 +46,18 @@ class Options
       }
       @app.send(options[option])
     end
+  end
+
+  def save_data
+    FileUtils.rm_f(%w[books.json persons.json rentals.json])
+    @app.books.each { |book| save_book(book.title, book.author) }
+    @app.persons.each do |person|
+      if defined?(person.specialization).nil?
+        save_student(person.id, person.age, person.name, person.parent_permission)
+      else
+        save_teacher(person.id, person.age, person.name, person.specialization)
+      end
+    end
+    @app.rentals.each { |rental| save_rental(rental.date, rental.person.id, rental.book.title) }
   end
 end

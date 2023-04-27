@@ -18,4 +18,10 @@ module Utilities
       f.write "{\"date\": \"#{date}\", \"person_id\": \"#{person_id}\", \"book_title\": \"#{book_title}\"} \n"
     end
   end
+
+  def save_book(title, author)
+    File.open('books.json', 'a') do |f|
+      f.write "{ \"title\": \"#{title}\", \"author\": \"#{author}\"} \n"
+    end
+  end
 end
