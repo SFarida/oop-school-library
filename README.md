@@ -49,9 +49,13 @@
 
 ### Key Features <a name="key-features"></a>
 
-- **Person class**
-- **Student class**
-- **Teacher class**
+  - List all books.
+  - List all people.
+  - Create a person (teacher or student, not a plain `Person`).
+  - Create a book.
+  - Create a rental.
+  - List all rentals for a given person id.
+  - Save data in json files
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -85,21 +89,28 @@ To fix all Linter error automatically
 
 <!-- AUTHOR -->
 
-## 👥 Author <a name="authors"></a>
+## 👥 Authors <a name="authors"></a>
 
-👤 **Author**
+👤 **Farida Gueleu**
 
-: Farida Gueleu
 
 - GitHub: [@SFarida](https://github.com/SFarida)
 - Twitter: [@First_Dialo](https://twitter.com/First_Dialo)
 - LinkedIn: [LinkedIn](https://linkedin.com/in/farida-gueleu/)
 
+
+👤 **Edahi Antonio Gutiérrez Reyes**
+
+- GitHub: [@githubhandle](https://github.com/edahigure)
+- Twitter: [@twitterhandle](https://twitter.com/edahigure)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/edahigure/)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- [ ] **UI**
+  -  **Implement a graphic UI**
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
