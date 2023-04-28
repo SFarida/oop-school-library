@@ -2,7 +2,6 @@ require './teacher'
 require './decorator'
 describe Teacher do
   context 'Testing class Teacher' do
-
     it 'should create a Teacher class' do
       teacher = Teacher.new(34, 'Network', 'maximilianus')
       expect(teacher.can_use_services).to eq(true)
