@@ -2,7 +2,7 @@ require './person'
 describe Person do
   context 'Testing class Person' do
 
-    it 'should create a book' do
+    it 'should create a Person class' do
       person = Person.new(12, 'Alex')
       older_person = Person.new(19, 'Tom')
       expect(person.age).to eq(12)
